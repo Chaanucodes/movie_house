@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/transparent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <!--    Create a card view with an imageView and a textView-->
@@ -11,7 +11,6 @@
         android:id="@+id/cvMovieItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
@@ -25,14 +24,16 @@
                 android:id="@+id/tvMovieTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Movie Title"
-                android:textColor="#FFFFFF"
-                android:textAppearance="?attr/textAppearanceLargePopupMenu"
-                android:textSize="18sp"
-                android:elevation="2dp"
+                tools:text="Movie Title"
+                android:textColor="@color/off_white"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textAlignment="viewStart"
+                android:textStyle="bold"
+                android:elevation="3dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:marqueeRepeatLimit="marquee_forever"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
@@ -45,6 +46,16 @@
                 app:layout_constraintTop_toTopOf="@+id/tvMovieTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/title_bg"
+                android:elevation="2dp" />
 
 
 

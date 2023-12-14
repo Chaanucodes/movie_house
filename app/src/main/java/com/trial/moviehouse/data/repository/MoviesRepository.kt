@@ -6,8 +6,10 @@ import com.trial.moviehouse.data.models.Movie
 import com.trial.moviehouse.data.network.MoviesAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 
@@ -21,7 +23,6 @@ class MoviesRepositoryImpl @Inject constructor(
 ) : MoviesRepository {
     override suspend fun getMovies() = flow {
         try {
-            emit(moviesDao.getMovies())
             val networkMovies = moviesAPI.getMovies()
             val networkMoviesList = networkMovies.body()?.data
             if(networkMoviesList!= null){
@@ -29,6 +30,8 @@ class MoviesRepositoryImpl @Inject constructor(
                 emit(networkMoviesList)
             }
         } catch (e: Exception) {
+            val movies = moviesDao.getMovies()
+            emitAll(movies)
             Log.e("MoviesRepository", "getMovies: ${e.message}")
         }
     }.flowOn(Dispatchers.IO)

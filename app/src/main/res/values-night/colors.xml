@@ -3,15 +3,12 @@
 
     <color name="transparent">#00000000</color>
     <color name="transparent_med">#80000000</color>
-    <color name="transparent_dark">#C0000000</color>
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="secondary">@color/white</color>
+    <color name="secondary">@color/black</color>
     <color name="primary">#FFA500</color>
-    <color name="tertiary">@color/black</color>
-
-    <color name="off_white">#FFFAFAFA</color>
+    <color name="tertiary">@color/white</color>
 
 </resources>
