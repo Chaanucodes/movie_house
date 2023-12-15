@@ -33,13 +33,14 @@ class MovieDetailsFragment : Fragment() {
         args.movie.let {movie->
             binding?.let {
                 it.tvMovieTitle.text = movie.title
-                val voteAverage = "Rating: " + movie.voteAverage.toString()
+                val roundedNumber = String.format("%.1f", movie.voteAverage)
+                val voteAverage = "Rating: $roundedNumber"
                 it.tvMovieRating.text = voteAverage
 
                 val releaseDate = "Release Date: " + getReleaseDate(movie.releaseDate)
                 it.tvMovieReleaseDate.text = releaseDate
 
-                it.tvMovieOverview.text = movie.overview
+                it.tvMovieOverview.text = "Description: \n" + movie.overview
                 val genres = "Genres : ${GenreUtils.getGenreName(movie.genres)}"
                 it.tvMovieGenres.text = genres
                 movie.backdropPath?.let { it1 -> setMovieImages(it1, it.ivMovieBackdrop) }
