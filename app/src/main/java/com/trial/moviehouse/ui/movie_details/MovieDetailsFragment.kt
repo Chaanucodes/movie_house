@@ -40,7 +40,8 @@ class MovieDetailsFragment : Fragment() {
                 val releaseDate = "Release Date: " + getReleaseDate(movie.releaseDate)
                 it.tvMovieReleaseDate.text = releaseDate
 
-                it.tvMovieOverview.text = "Description: \n" + movie.overview
+                val description = "Description: \n" + movie.overview
+                it.tvMovieOverview.text = description
                 val genres = "Genres : ${GenreUtils.getGenreName(movie.genres)}"
                 it.tvMovieGenres.text = genres
                 movie.backdropPath?.let { it1 -> setMovieImages(it1, it.ivMovieBackdrop) }
