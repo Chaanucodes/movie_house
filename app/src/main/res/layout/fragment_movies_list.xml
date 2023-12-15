@@ -5,16 +5,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_bg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.MoviesListFragment">
+    tools:context=".ui.movie.MoviesListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
+        android:paddingStart="12dp"
         android:paddingBottom="16dp"
         android:paddingTop="16dp"
+        android:paddingEnd="12dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,13 +24,26 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#CFD8DC"
             android:textAppearance="?attr/textAppearanceHeadlineLarge"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="All Movies" />
+            android:text="Popular Movies" />
 
         <ImageButton
+            android:id="@+id/ibSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@color/secondary"
+            android:src="@drawable/ic_settings"/>
+
+        <!--<ImageButton
             android:id="@+id/ibChangeMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_filter"/>
+            android:src="@drawable/ic_filter"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

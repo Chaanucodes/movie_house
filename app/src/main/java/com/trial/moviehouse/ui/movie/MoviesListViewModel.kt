@@ -1,4 +1,4 @@
-package com.trial.moviehouse.ui
+package com.trial.moviehouse.ui.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

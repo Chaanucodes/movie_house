@@ -1,15 +1,15 @@
-package com.trial.moviehouse.ui
+package com.trial.moviehouse.ui.movie
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
-import com.trial.moviehouse.R
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.trial.moviehouse.databinding.FragmentMoviesListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,13 +38,22 @@ class MoviesListFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.movies.collect { movies ->
-                if(movies.isNotEmpty()){
-                    binding?.rvMoviesList?.adapter = MoviesListAdapter(movies)
+                if (movies.isNotEmpty()) {
+                    binding?.rvMoviesList?.adapter = MoviesListAdapter(movies) { movie ->
+                        MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(movie).also { navDr ->
+                            findNavController().navigate(navDr)
+                        }
+                    }
 
                 }
             }
         }
 
+        // Enable Dark Mode
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+// Enable Light Mode
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
     }

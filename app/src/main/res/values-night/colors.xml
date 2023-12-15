@@ -8,7 +8,11 @@
     <color name="white">#FFFFFF</color>
 
     <color name="secondary">@color/black</color>
-    <color name="primary">#FFA500</color>
+    <color name="primary">#7B1FA2</color>
     <color name="tertiary">@color/white</color>
+
+    <color name="title_color">@color/white</color>
+    <color name="off_white">#FFFAFAFA</color>
+
 
 </resources>
