@@ -2,6 +2,7 @@ package com.trial.moviehouse.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
@@ -41,13 +42,26 @@ data class Movie(
     @SerializedName("vote_count")
     val voteCount: Int?
 ) : Parcelable {
+
+
     override fun describeContents(): Int { return 0 }
 
     companion object : Parceler<Movie> {
         override fun Movie.write(parcel: Parcel, flags: Int) {}
         override fun create(parcel: Parcel): Movie = TODO()
+
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }
+
 
 data class Genre(
     val id: Int,

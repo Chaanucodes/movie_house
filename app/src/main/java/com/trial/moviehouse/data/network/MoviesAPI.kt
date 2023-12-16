@@ -13,7 +13,8 @@ interface MoviesAPI {
 
     @GET("movie/popular")
     suspend fun getMovies(
-        @Query("api_key")apiKey: String  = Constants.API_KEY
+        @Query("api_key")apiKey: String  = Constants.API_KEY,
+        @Query("page") page: Int = 1
     ): Response<CustomResponse<List<Movie>>>
 
     @GET("genre/movie/list")

@@ -9,13 +9,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 
 
 interface MoviesRepository {
     suspend fun getMovies() : Flow<Any>?
+
+    suspend fun getNetworkMovies() : List<Movie>
 }
 class MoviesRepositoryImpl @Inject constructor(
     private val moviesAPI: MoviesAPI,
@@ -24,17 +25,22 @@ class MoviesRepositoryImpl @Inject constructor(
     override suspend fun getMovies() = flow {
         try {
             val networkMovies = moviesAPI.getMovies()
-            val networkMoviesList = networkMovies.body()?.data
+            val networkMoviesList = networkMovies.body()?.movies
             if(networkMoviesList!= null){
                 moviesDao.insertMovies(networkMoviesList)
                 emit(networkMoviesList)
             }
         } catch (e: Exception) {
-            val movies = moviesDao.getMovies()
-            emitAll(movies)
+/*            val movies = moviesDao.getMovies()
+            emitAll(movies)*/
             Log.e("MoviesRepository", "getMovies: ${e.message}")
         }
     }.flowOn(Dispatchers.IO)
+
+    override suspend fun getNetworkMovies(): List<Movie> {
+        val networkMovies = moviesAPI.getMovies()
+        return networkMovies.body()?.movies?: emptyList()
+    }
 }
 
 

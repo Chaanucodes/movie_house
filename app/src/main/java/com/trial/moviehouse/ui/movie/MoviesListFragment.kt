@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.trial.moviehouse.databinding.FragmentMoviesListBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -36,7 +37,13 @@ class MoviesListFragment : Fragment() {
 
         binding?.rvMoviesList?.adapter = adapter
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.moviePagingFlow.collect { pagingData ->
+                adapter?.submitData(pagingData)
+            }
+        }
+
+      /*  lifecycleScope.launch {
             viewModel.movies.collect { movies ->
                 if (movies.isNotEmpty()) {
                     binding?.rvMoviesList?.adapter = MoviesListAdapter(movies) { movie ->
@@ -47,7 +54,7 @@ class MoviesListFragment : Fragment() {
 
                 }
             }
-        }
+        }*/
 
         // Enable Dark Mode
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)

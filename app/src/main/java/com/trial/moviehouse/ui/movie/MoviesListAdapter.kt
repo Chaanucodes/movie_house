@@ -3,6 +3,7 @@ package com.trial.moviehouse.ui.movie
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,13 +16,10 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class MoviesListAdapter(private val movies : List<Movie>,
-                        val onClick : (movie: Movie)->Unit) : RecyclerView.Adapter<MoviesListAdapter.MoviesViewHolder>(){
-
-    fun updateList(newMovies : List<Movie>){
-        movies.toMutableList().addAll(newMovies)
-        notifyDataSetChanged()
-    }
+class MoviesListAdapter(
+    private val movies: List<Movie>,
+    val onClick: (movie: Movie) -> Unit
+) : PagingDataAdapter<Movie, MoviesListAdapter.MoviesViewHolder>(Movie.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return MoviesViewHolder(
@@ -46,13 +44,7 @@ class MoviesListAdapter(private val movies : List<Movie>,
             onClick(movies[position])
         }
 
-
-
-/*        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = movies[position].releaseDate?.let { sdf.parse(it) }
-
-        val outputFormatter = SimpleDateFormat("d MMM yyyy", Locale.getDefault())*/
-        val releaseDate ="Release Date: \n" + getReleaseDate(movies[position].releaseDate)
+        val releaseDate = "Release Date: \n" + getReleaseDate(movies[position].releaseDate)
 
         holder.binding.tvMovieReleaseDate.text = releaseDate
 
@@ -71,6 +63,6 @@ class MoviesListAdapter(private val movies : List<Movie>,
     }
 
     class MoviesViewHolder(val binding: MovieListItemBinding) :
-    RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root)
 
 }

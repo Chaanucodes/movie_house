@@ -80,9 +80,15 @@ dependencies {
     //RecyclerView
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
 
+    //Paging3
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    //Add room database paging dependency
+
+
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     testImplementation("junit:junit:4.13.2")
