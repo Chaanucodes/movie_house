@@ -54,9 +54,12 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
+    //hilt
     implementation ("com.google.dagger:hilt-android:2.49")
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
     kapt ("com.google.dagger:hilt-compiler:2.49")
+
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //activity and fragment for hilt
     implementation ("androidx.activity:activity-ktx:1.8.1")

@@ -17,17 +17,19 @@ Live Data has not been explicitly used in this project. I have relied on flow to
 Glide library has been used to display images.
 
 App flow:
+Once you have installed the app, you may find it in your app drawer by the name `Movie house`
 When the user opens the app, the first screen is the listing fetches the list of movies from database that were initially retrieved from an API
 There are 2 clickable item types in this screen:
 1. Settings button -> Navigate to settings screen
 2. Movie tile -> Navigate to movie details screen
 
-App provied support for offline caching.
+App provides support for offline caching.
 App relies on system navigation buttons/gestures to navigate back as app currently follow a no action bar theme.
 
 Some area of improvements observed:
 1. When the connection comes back online, the app should resume paging. Currently, user must restart the app after connection loss and regain to load new pages.
 2. Unit tests could have been written
+3. Loading screens could have been added
 
 
 In **sprint branch**, there are a total of 2 screens:
