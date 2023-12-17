@@ -1,10 +1,8 @@
 package com.trial.moviehouse.ui.movie
 
-import android.graphics.Bitmap
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

@@ -1,6 +1,5 @@
 package com.trial.moviehouse.data.paging
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -14,6 +13,7 @@ import com.trial.moviehouse.data.network.MoviesAPI
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
+
 
 @OptIn(ExperimentalPagingApi::class)
 class MovieRemoteMediator @Inject constructor(
@@ -32,7 +32,7 @@ class MovieRemoteMediator @Inject constructor(
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Movie>): MediatorResult {
         return try {
             var moviesFeed : MovieAPIResponse<List<Movie>>? = null
-            val loadKey = when (loadType) {
+            when (loadType) {
                 LoadType.REFRESH -> {
                     currentPage = 1
                     currentPage

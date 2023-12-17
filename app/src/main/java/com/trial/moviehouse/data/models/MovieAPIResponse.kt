@@ -13,4 +13,4 @@ data class MovieAPIResponse<T : Any>(
                                    val totalPages: Int,
                                    @SerializedName("total_results")
                                    val totalResults: Int)
-data class CustomGenreResponse<T : Any>(@SerializedName("genres") val data: T)
+

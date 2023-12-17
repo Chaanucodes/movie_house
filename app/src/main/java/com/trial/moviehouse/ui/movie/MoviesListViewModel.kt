@@ -7,7 +7,6 @@ import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.trial.moviehouse.data.models.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

@@ -64,13 +64,6 @@ data class Movie(
     }
 }
 
-
-data class Genre(
-    val id: Int,
-    val name: String
-)
-
-
 class GenreConverter {
     @TypeConverter
     fun fromString(value: String): List<Int>? {

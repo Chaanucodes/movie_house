@@ -47,32 +47,11 @@ class MoviesListFragment : Fragment() {
         binding?.rvMoviesList?.setHasFixedSize(true)
         binding?.rvMoviesList?.setItemViewCacheSize(20)
 
-
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.moviePagingFlow.collectLatest { pagingData ->
                 adapter?.submitData(pagingData)
             }
         }
-
-        /*  lifecycleScope.launch {
-              viewModel.movies.collect { movies ->
-                  if (movies.isNotEmpty()) {
-                      binding?.rvMoviesList?.adapter = MoviesListAdapter(movies) { movie ->
-                          MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(movie).also { navDr ->
-                              findNavController().navigate(navDr)
-                          }
-                      }
-
-                  }
-              }
-          }*/
-
-        // Enable Dark Mode
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
-// Enable Light Mode
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
 
     }
