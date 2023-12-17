@@ -1,6 +1,7 @@
 package com.trial.moviehouse.ui.movie
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.trial.moviehouse.databinding.FragmentMoviesListBinding
+import com.trial.moviehouse.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -57,6 +60,32 @@ class MoviesListFragment : Fragment() {
             }
         }
 
+        adapter?.addLoadStateListener { loadState ->
+            when {
+                loadState.prepend is LoadState.Error -> {
+                    loadState.prepend as LoadState.Error
+                    Log.d("MOVIE_LIST", "loadState.prepend : ${loadState.prepend}")
+                }
+
+                loadState.append is LoadState.Error -> {
+                    loadState.append as LoadState.Error
+                    binding?.root.let { view ->
+                        view?.let { v ->
+                            v.showSnackBar((loadState.append as LoadState.Error).error.localizedMessage)
+                        }
+                    }
+                }
+
+                loadState.refresh is LoadState.Error -> {
+                    loadState.refresh as LoadState.Error
+                    Log.d("MOVIE_LIST", "loadState.refresh : ${loadState.refresh}")
+                }
+
+                else -> {
+                    null
+                }
+            }
+        }
         binding?.rvMoviesList?.adapter = adapter
         binding?.rvMoviesList?.setHasFixedSize(true)
         binding?.rvMoviesList?.setItemViewCacheSize(20)
