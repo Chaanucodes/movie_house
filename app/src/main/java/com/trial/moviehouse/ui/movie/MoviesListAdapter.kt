@@ -3,6 +3,7 @@ package com.trial.moviehouse.ui.movie
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,13 +13,10 @@ import com.trial.moviehouse.data.models.Movie
 import com.trial.moviehouse.databinding.MovieListItemBinding
 import com.trial.moviehouse.util.Constants
 import com.trial.moviehouse.util.getReleaseDate
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 
 class MoviesListAdapter(
-    private val movies: List<Movie>,
-    val onClick: (movie: Movie) -> Unit
+    val onClick: (movie: Movie?) -> Unit
 ) : PagingDataAdapter<Movie, MoviesListAdapter.MoviesViewHolder>(Movie.DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -37,19 +35,24 @@ class MoviesListAdapter(
             isSelected = true
             isSingleLine = true
             ellipsize = TextUtils.TruncateAt.MARQUEE
-            text = movies[position].title
+            text = getItem(position)?.title
         }
 
         holder.binding.root.setOnClickListener {
-            onClick(movies[position])
+            onClick(getItem(position))
         }
 
-        val releaseDate = "Release Date: \n" + getReleaseDate(movies[position].releaseDate)
+        val releaseDate = getItem(position)?.releaseDate
+        val parsedReleaseDate = if (releaseDate.isNullOrEmpty()) {
+            "Release Date: \nN/A"
+        }else{
+            "Release Date: \n" + getReleaseDate(getItem(position)?.releaseDate)
+        }
 
-        holder.binding.tvMovieReleaseDate.text = releaseDate
+        holder.binding.tvMovieReleaseDate.text = parsedReleaseDate
 
         Glide.with(holder.binding.root.context)
-            .load(Constants.IMAGE_BASE_URL + movies[position].posterPath)
+            .load(Constants.IMAGE_BASE_URL + getItem(position)?.posterPath)
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.placeholder_image)
@@ -58,9 +61,6 @@ class MoviesListAdapter(
             .into(holder.binding.ivMoviePoster)
     }
 
-    override fun getItemCount(): Int {
-        return movies.size
-    }
 
     class MoviesViewHolder(val binding: MovieListItemBinding) :
         RecyclerView.ViewHolder(binding.root)

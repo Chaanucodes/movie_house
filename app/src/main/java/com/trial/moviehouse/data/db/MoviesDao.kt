@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.trial.moviehouse.data.models.Movie
 import com.trial.moviehouse.util.Constants
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +16,9 @@ interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<Movie>) : List<Long>
+
+    @Upsert
+    fun upsertMovies(movie: List<Movie>) : List<Long>
 
 /*    @Query("SELECT * FROM ${Constants.DATABASE_NAME}")
     fun getMovies() : Flow<List<Movie>>*/

@@ -1,5 +1,6 @@
 package com.trial.moviehouse.data.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -8,6 +9,7 @@ import androidx.room.withTransaction
 import com.trial.moviehouse.data.db.MoviesDao
 import com.trial.moviehouse.data.db.MoviesDatabase
 import com.trial.moviehouse.data.models.Movie
+import com.trial.moviehouse.data.models.MovieAPIResponse
 import com.trial.moviehouse.data.network.MoviesAPI
 import retrofit2.HttpException
 import java.io.IOException
@@ -24,33 +26,59 @@ class MovieRemoteMediator @Inject constructor(
         return InitializeAction.SKIP_INITIAL_REFRESH
     }
 
+    companion object{
+        private var currentPage = 1
+    }
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Movie>): MediatorResult {
         return try {
+            var moviesFeed : MovieAPIResponse<List<Movie>>? = null
             val loadKey = when (loadType) {
-                LoadType.REFRESH -> 1
+                LoadType.REFRESH -> {
+                    currentPage
+                }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
-                    val lastItem = state.lastItemOrNull()
-                        ?: return MediatorResult.Success(endOfPaginationReached = true)
-                    lastItem.id
+                    moviesFeed = moviesAPI.getMovies(
+                        page = currentPage,
+                    ).body()
+
+                    if(moviesFeed!=null && moviesFeed.movies.isNotEmpty()){
+                        if(moviesFeed.page<moviesFeed.totalPages){
+                            currentPage = moviesFeed.page + 1
+                            currentPage
+                        }else{
+                            return MediatorResult.Success(endOfPaginationReached = true)
+                        }
+                    }else{
+                        return MediatorResult.Success(endOfPaginationReached = true)
+
+                    }
                 }
             }
 
-            val moviesFeed = moviesAPI.getMovies(
+            Log.d("MovieRemoteMediator", "currentPage: $loadKey")
+
+   /*         val moviesFeed = moviesAPI.getMovies(
                 page = loadKey,
-            )
+            )*/
 
             movieDb.withTransaction {
-                if (loadType == LoadType.REFRESH) {
+                val movieEntities = moviesFeed?.movies?: emptyList()
+
+                if (currentPage==1 && movieEntities.isNotEmpty()) {
                     moviesDao.deleteAllMovies()
                 }
-                val movieEntities = moviesFeed.body()?.movies ?: emptyList()
 
-                moviesDao.insertMovies(movieEntities)
+                if(movieEntities.isEmpty()){
+                    return@withTransaction MediatorResult.Success(endOfPaginationReached = true)
+                }else{
+                    moviesDao.upsertMovies(movieEntities)
+
+                }
             }
 
             MediatorResult.Success(
-                endOfPaginationReached = moviesFeed.body()?.movies?.isEmpty() ?: true
+                endOfPaginationReached = moviesFeed?.movies?.isEmpty() ?: true
             )
         } catch (e: IOException) {
             MediatorResult.Error(e)

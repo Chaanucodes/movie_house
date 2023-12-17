@@ -3,8 +3,11 @@ package com.trial.moviehouse.data.models
 import com.google.gson.annotations.SerializedName
 
 
-data class CustomResponse<T : Any>(val page: Int,
-                                   @SerializedName(value = "results")
+
+data class MovieAPIResponse<T : Any>(
+                                    @SerializedName("page")
+                                    val page: Int,
+                                   @SerializedName("results")
                                    val movies: List<Movie>,
                                    @SerializedName("total_pages")
                                    val totalPages: Int,

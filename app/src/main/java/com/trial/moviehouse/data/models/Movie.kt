@@ -56,7 +56,7 @@ data class Movie(
             }
 
             override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }

@@ -29,6 +29,9 @@ object PagingModule {
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
+                prefetchDistance = 2,
+                enablePlaceholders = false,
+                initialLoadSize = 20
             ),
             remoteMediator = MovieRemoteMediator(
                 movieDb = moviesDb,
