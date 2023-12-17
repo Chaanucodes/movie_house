@@ -15,10 +15,14 @@ The repository solely focuses on data preferences. This repository was created f
 
 Live Data has not been explicitly used in this project. I have relied on flow to handle the stream of data.
 Glide library has been used to display images.
+PagingDataAdapter has been used to display the paginated data
+View binding has been used in this project.
+
+The details of API have been fetched from https://developer.themoviedb.org/reference/movie-popular-list
 
 App flow:
 Once you have installed the app, you may find it in your app drawer by the name `Movie house`
-When the user opens the app, the first screen is the listing fetches the list of movies from database that were initially retrieved from an API
+When the user opens the app, the first screen is the listing screen which fetches the list of movies from database that were initially retrieved from an API
 There are 2 clickable item types in this screen:
 1. Settings button -> Navigate to settings screen
 2. Movie tile -> Navigate to movie details screen
