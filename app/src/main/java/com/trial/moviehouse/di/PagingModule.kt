@@ -30,7 +30,7 @@ object PagingModule {
             config = PagingConfig(
                 pageSize = 20,
                 prefetchDistance = 2,
-                enablePlaceholders = false,
+                enablePlaceholders = true,
                 initialLoadSize = 20
             ),
             remoteMediator = MovieRemoteMediator(

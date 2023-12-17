@@ -34,6 +34,7 @@ class MovieRemoteMediator @Inject constructor(
             var moviesFeed : MovieAPIResponse<List<Movie>>? = null
             val loadKey = when (loadType) {
                 LoadType.REFRESH -> {
+                    currentPage = 1
                     currentPage
                 }
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
@@ -56,16 +57,10 @@ class MovieRemoteMediator @Inject constructor(
                 }
             }
 
-            Log.d("MovieRemoteMediator", "currentPage: $loadKey")
-
-   /*         val moviesFeed = moviesAPI.getMovies(
-                page = loadKey,
-            )*/
-
             movieDb.withTransaction {
                 val movieEntities = moviesFeed?.movies?: emptyList()
 
-                if (currentPage==1 && movieEntities.isNotEmpty()) {
+                if (loadType == LoadType.REFRESH || (movieEntities.isNotEmpty() && currentPage == 1)) {
                     moviesDao.deleteAllMovies()
                 }
 

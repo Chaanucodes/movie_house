@@ -1,5 +1,6 @@
 package com.trial.moviehouse.ui.movie
 
+import android.graphics.Bitmap
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -57,6 +58,7 @@ class MoviesListAdapter(
                 RequestOptions()
                     .placeholder(R.drawable.placeholder_image)
                     .error(R.drawable.error_image)
+
             )
             .into(holder.binding.ivMoviePoster)
     }

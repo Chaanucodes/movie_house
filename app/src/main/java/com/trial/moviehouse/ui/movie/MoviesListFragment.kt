@@ -45,11 +45,12 @@ class MoviesListFragment : Fragment() {
 
         binding?.rvMoviesList?.adapter = adapter
         binding?.rvMoviesList?.setHasFixedSize(true)
+        binding?.rvMoviesList?.setItemViewCacheSize(20)
+
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.moviePagingFlow.collectLatest { pagingData ->
-
                 adapter?.submitData(pagingData)
             }
         }

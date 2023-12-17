@@ -23,8 +23,10 @@ data class Movie(
     val backdropPath: String?,
     @SerializedName("genre_ids")
     val genres: List<Int?>?,
-    @PrimaryKey
+    @SerializedName("id")
     val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val movieId: Int = 0,
     @SerializedName("original_language")
     val originalLanguage: String?,
     @SerializedName("original_title")
@@ -52,11 +54,11 @@ data class Movie(
 
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.movieId == newItem.movieId
             }
 
             override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.movieId == newItem.movieId
             }
         }
     }
