@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_moviesListFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_moviesListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
@@ -25,4 +28,9 @@
             android:name="movie"
             app:argType="com.trial.moviehouse.data.models.Movie" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.trial.moviehouse.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

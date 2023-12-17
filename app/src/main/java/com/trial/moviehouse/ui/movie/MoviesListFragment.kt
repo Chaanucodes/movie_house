@@ -32,7 +32,21 @@ class MoviesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpAdapter()
+        setUpListeners()
 
+
+    }
+
+    private fun setUpListeners() {
+        binding?.ibSettings?.setOnClickListener { _ ->
+            MoviesListFragmentDirections.actionMoviesListFragmentToSettingsFragment().also { navDr ->
+                findNavController().navigate(navDr)
+            }
+        }
+    }
+
+    private fun setUpAdapter() {
         adapter = MoviesListAdapter { movie ->
             movie?.let {
                 MoviesListFragmentDirections.actionMoviesListFragmentToMovieDetailsFragment(
@@ -52,8 +66,6 @@ class MoviesListFragment : Fragment() {
                 adapter?.submitData(pagingData)
             }
         }
-
-
     }
 
 
